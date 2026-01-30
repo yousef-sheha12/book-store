@@ -56,7 +56,7 @@ export default function HomePage() {
                             }
                         }
                     } : {},
-                    fields: ["pro_name"]
+                    // fields: ["pro_name"]
                 }
             });
             console.log(res.data)
