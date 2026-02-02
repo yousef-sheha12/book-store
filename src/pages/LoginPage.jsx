@@ -1,14 +1,21 @@
 import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { useAuthStore } from "../store";
 
 export default function LoginPage() {
+    const navigate = useNavigate();
+
+    const login = useAuthStore((state) => state.login)
 
     const handleLogin = async (values) => {
         console.log(values)
         try {
             const res = await axios.post("http://localhost:1337/api/auth/local", values);
-            console.log(res)
+            console.log(res.data.jwt)
+            login(res.data.jwt)
+            navigate("/");
         } catch (error) {
             console.log(error)
         }

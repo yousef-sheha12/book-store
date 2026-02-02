@@ -2,12 +2,19 @@ import axios from "axios";
 import BookCard from "../components/BookCard";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useAuthStore } from "../store";
+import { useNavigate } from "react-router-dom";
+import { IoIosLogIn, IoIosLogOut } from "react-icons/io";
 
 export default function HomePage() {
     // 1. pending
     // 2. success (optional)
     // 3. error (optional)
     // POST PUT DELETE GET
+
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
+    const logout = useAuthStore((state) => state.logout)
+    const navigate = useNavigate();
 
     const [products, setProducts] = useState([]);
 
@@ -86,6 +93,15 @@ export default function HomePage() {
 
     return (
         <>
+            <div className="flex">
+                <button className="btn btn-primary text-zinc-700" onClick={isAuthenticated ? logout : () => {
+                    navigate("/login")
+                }}>
+                    {
+                        isAuthenticated ? <IoIosLogOut size={30} /> : <IoIosLogIn size={30} />
+                    }
+                </button>
+            </div>
             <div className="flex justify-center gap-5 px-10 pt-10">
                 {
                     categories.map((cat) => {
