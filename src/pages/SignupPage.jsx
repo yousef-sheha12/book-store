@@ -1,65 +1,192 @@
-import axios from "axios";
+import { Eye, EyeOff } from "lucide-react";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
 
 export default function SignupPage() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleRegister = async (values) => {
-        if (values.password !== values.confirmPassword) {
-            alert("password not matching")
-        } else {
-            const data = {
-                username: values.username,
-                email: values.email,
-                password: values.password
-            }
-            try {
-                const res = await axios.post("http://localhost:1337/api/auth/local/register", data);
-                navigate("/login")
-                console.log(res)
-            } catch (error) {
-                console.log(error)
-            }
-        }
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  /* ================= API (Strapi Configured) ================= */
+  const handleSignup = async (values) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:1337/api/auth/local/register",
+        {
+          // Strapi يتطلب username إجبارياً، لذا نضع فيه قيمة الإيميل
+          username: values.email,
+          email: values.email,
+          password: values.password,
+        },
+      );
+
+      // Strapi يعيد التوكن في حقل jwt
+      const token = res.data.jwt;
+
+      sessionStorage.setItem("token", token);
+
+      // التوجيه لصفحة تسجيل الدخول أو الصفحة الرئيسية حسب منطق تطبيقك
+      navigate("/login");
+    } catch (error) {
+      console.log(error.response?.data);
+      // عرض رسالة الخطأ القادمة من Strapi
+      alert(error.response?.data?.error?.message || "Registration failed ❌");
     }
+  };
 
-    const registerSchema = Yup.object({
-        username: Yup.string().required().max(10),
-        email: Yup.string().required().email(),
-        password: Yup.string().required(),
-        confirmPassword: Yup.string().required()
-    })
+  /* ================= Validation ================= */
+  const registerSchema = Yup.object({
+    firstName: Yup.string().required("First name required"),
+    lastName: Yup.string().required("Last name required"),
+    email: Yup.string().email("Invalid email").required("Email required"),
+    password: Yup.string()
+      .min(8, "Password must be 8+ characters")
+      .required("Password required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password")], "Passwords must match")
+      .required("Confirm password required"),
+  });
 
-    return (
-        <div className="h-dvh bg-[#630505] flex justify-center items-center">
-            <Formik initialValues={{ username: "", email: "", password: "", confirmPassword: "" }} validationSchema={registerSchema} onSubmit={(values) => { handleRegister(values) }}>
-                <Form className="p-5 shadow rounded-lg flex flex-col gap-2 bg-white text-black w-100">
-                    <h2 className="text-2xl capitalize font-bold">sign up form</h2>
-                    <label htmlFor="username">username</label>
-                    <Field name="username" type="text" id="username" placeholder="Enter your username"
-                        className="border border-[#22222233] rounded-lg p-4 w-full placeholder:text-[#22222280]"
-                    />
-                    <ErrorMessage name="username" component={"p"} className="text-red-500 py-2 font-semibold" />
-                    <label htmlFor="email">Email</label>
-                    <Field name="email" type="email" id="email" placeholder="Enter your email"
-                        className="border border-[#22222233] rounded-lg p-4 w-full placeholder:text-[#22222280]"
-                    />
-                    <ErrorMessage name="email" component={"p"} className="text-red-500 py-2 font-semibold" />
-                    <label htmlFor="password">Password</label>
-                    <Field name="password" type="password" id="password" placeholder="Enter your password"
-                        className="border border-[#22222233] rounded-lg p-4 w-full placeholder:text-[#22222280]"
-                    />
-                    <ErrorMessage name="password" component={"p"} className="text-red-500 py-2 font-semibold" />
-                    <label htmlFor="confirmPassword">Confirm Password</label>
-                    <Field name="confirmPassword" type="password" id="confirmPassword" placeholder="Enter confirm password"
-                        className="border border-[#22222233] rounded-lg p-4 w-full placeholder:text-[#22222280]"
-                    />
-                    <ErrorMessage name="confirmPassword" component={"p"} className="text-red-500 py-2 font-semibold" />
-                    <button type="submit" className="btn btn-primary w-full">Register</button>
-                </Form>
-            </Formik>
-        </div>
-    )
+  /* ================= UI (Unchanged) ================= */
+  return (
+    <main className="flex-grow flex justify-center items-center bg-gray-50 py-20 px-4 text-black">
+      <Formik
+        initialValues={{
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        }}
+        validationSchema={registerSchema}
+        onSubmit={handleSignup}
+      >
+        <Form className="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl space-y-4">
+          {/* First Name */}
+          <div>
+            <label className="font-bold text-sm">First Name</label>
+            <Field
+              name="firstName"
+              className="w-full p-3 border rounded-lg"
+              placeholder="First name"
+            />
+            <ErrorMessage
+              name="firstName"
+              component="div"
+              className="text-red-500 text-sm"
+            />
+          </div>
+
+          {/* Last Name */}
+          <div>
+            <label className="font-bold text-sm">Last Name</label>
+            <Field
+              name="lastName"
+              className="w-full p-3 border rounded-lg"
+              placeholder="Last name"
+            />
+            <ErrorMessage
+              name="lastName"
+              component="div"
+              className="text-red-500 text-sm"
+            />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="font-bold text-sm">Email</label>
+            <Field
+              name="email"
+              type="email"
+              className="w-full p-3 border rounded-lg"
+              placeholder="example@gmail.com"
+            />
+            <ErrorMessage
+              name="email"
+              component="div"
+              className="text-red-500 text-sm"
+            />
+          </div>
+
+          {/* Password */}
+          <div className="relative">
+            <label className="font-bold text-sm">Password</label>
+            <Field
+              name="password"
+              type={showPassword ? "text" : "password"}
+              className="w-full p-3 border rounded-lg pr-10"
+              placeholder="Enter password"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-10 text-gray-400"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+            <ErrorMessage
+              name="password"
+              component="div"
+              className="text-red-500 text-sm"
+            />
+          </div>
+
+          {/* Confirm */}
+          <div className="relative">
+            <label className="font-bold text-sm">Confirm Password</label>
+            <Field
+              name="confirmPassword"
+              type={showConfirm ? "text" : "password"}
+              className="w-full p-3 border rounded-lg pr-10"
+              placeholder="Confirm password"
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirm(!showConfirm)}
+              className="absolute right-3 top-10 text-gray-400"
+            >
+              {showConfirm ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+            <ErrorMessage
+              name="confirmPassword"
+              component="div"
+              className="text-red-500 text-sm"
+            />
+          </div>
+
+          {/* Submit */}
+          <button
+            type="submit"
+            className="w-full bg-[#d81b60] text-white py-3 rounded-lg font-bold hover:bg-[#b0154b]"
+          >
+            Sign Up
+          </button>
+
+          {/* Links */}
+          <p className="text-center text-sm">
+            Already have an account?
+            <Link to="/login" className="text-pink-600 font-bold ml-2">
+              Login
+            </Link>
+          </p>
+
+          {/* Social */}
+          <div className="space-y-2">
+            <button className="w-full border py-3 rounded-lg flex justify-center gap-2">
+              <FcGoogle /> Google
+            </button>
+            <button className="w-full border py-3 rounded-lg flex justify-center gap-2">
+              <FaFacebook className="text-blue-600" /> Facebook
+            </button>
+          </div>
+        </Form>
+      </Formik>
+    </main>
+  );
 }
