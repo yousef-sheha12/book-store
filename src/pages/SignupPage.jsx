@@ -48,7 +48,7 @@ export default function SignupPage() {
   });
 
   return (
-    <main className="flex-grow flex justify-center items-center bg-gray-50 py-20 px-4 text-black">
+    <main className="grow flex justify-center items-center bg-gray-50 py-20 px-4 text-black">
       <Formik
         initialValues={{
           firstName: "",

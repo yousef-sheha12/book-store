@@ -3,7 +3,7 @@ import { Trash2, ShoppingCart, Truck, ArrowRight } from "lucide-react";
 
 const CartItem = ({ title, author, price, image, asin }) => (
   <div className="bg-white p-6 mb-4 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row items-center gap-6 transition-all hover:shadow-md">
-    <div className="w-32 h-44 flex-shrink-0">
+    <div className="w-32 h-44 shrink-0">
       <img
         src={image}
         alt={title}
@@ -11,7 +11,7 @@ const CartItem = ({ title, author, price, image, asin }) => (
       />
     </div>
 
-    <div className="flex-grow space-y-2 text-center md:text-left">
+    <div className="grow space-y-2 text-center md:text-left">
       <h3 className="text-xl font-bold text-gray-800">{title}</h3>
       <p className="text-sm text-gray-500 font-medium">
         Author: <span className="text-gray-700">{author}</span>

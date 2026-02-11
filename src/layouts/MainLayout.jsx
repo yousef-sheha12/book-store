@@ -20,7 +20,7 @@ export default function MainLayout() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <Header variant={getVariant()} />
-      <main className="flex-grow">
+      <main className="grow">
         <Outlet />
       </main>
       <Footer />

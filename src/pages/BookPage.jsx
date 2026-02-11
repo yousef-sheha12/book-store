@@ -140,7 +140,7 @@ export default function BookPage() {
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value)}
-              className="bg-white border border-gray-200 px-5 pl-2 py-3 rounded-md text-gray-500 text-sm focus:outline-none min-w-[150px]"
+              className="bg-white border border-gray-200 px-5 pl-2 py-3 rounded-md text-gray-500 text-sm focus:outline-none min-w-37.5"
             >
               <option value="">Sort by</option>
               <option value="priceLow">price: Low to high</option>

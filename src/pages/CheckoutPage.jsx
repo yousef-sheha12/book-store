@@ -22,9 +22,7 @@ const CheckoutPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-12 font-sans">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Left Column: Shipping & Payment */}
         <div className="lg:col-span-7 space-y-6">
-          {/* Shipping Information Card */}
           <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
             <h2 className="text-xl font-bold text-gray-800 mb-6">
               Shipping information
@@ -45,7 +43,6 @@ const CheckoutPage = () => {
             </div>
           </div>
 
-          {/* Payment Method Card */}
           <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
             <h2 className="text-xl font-bold text-gray-800 mb-6">
               Payment Method
@@ -85,7 +82,6 @@ const CheckoutPage = () => {
             </div>
           </div>
 
-          {/* Note Card */}
           <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
             <h2 className="text-xl font-bold text-gray-800 mb-6">Note</h2>
             <div className="relative">
@@ -101,14 +97,12 @@ const CheckoutPage = () => {
           </div>
         </div>
 
-        {/* Right Column: Order Summary */}
         <div className="lg:col-span-5">
           <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 sticky top-8">
             <h2 className="text-xl font-bold text-gray-800 mb-6">
               Order summary
             </h2>
 
-            {/* Products List */}
             <div className="space-y-6 mb-8">
               {[1, 2].map((item) => (
                 <div key={item} className="flex gap-4">
@@ -117,7 +111,7 @@ const CheckoutPage = () => {
                     alt="Book"
                     className="w-20 h-28 object-cover rounded-lg shadow-sm"
                   />
-                  <div className="flex-grow flex flex-col justify-between py-1">
+                  <div className="grow flex flex-col justify-between py-1">
                     <div>
                       <h4 className="font-bold text-gray-800 text-sm">
                         Rich Dad And Poor Dad
@@ -150,10 +144,9 @@ const CheckoutPage = () => {
               ))}
             </div>
 
-            {/* Promo Code */}
             <p className="text-sm text-gray-400 mb-2">Have a discount code?</p>
             <div className="flex gap-2 mb-8">
-              <div className="relative flex-grow">
+              <div className="relative grow">
                 <input
                   type="text"
                   placeholder="Enter Promo Code"
@@ -169,7 +162,6 @@ const CheckoutPage = () => {
               </button>
             </div>
 
-            {/* Totals */}
             <div className="space-y-3 border-t border-gray-100 pt-6">
               <div className="flex justify-between text-gray-500 text-sm font-medium">
                 <span>Subtotal</span>
@@ -191,7 +183,6 @@ const CheckoutPage = () => {
               </div>
             </div>
 
-            {/* Confirm Button */}
             <button className="w-full mt-8 py-4 bg-[#E11D74] text-white rounded-xl font-bold text-lg hover:bg-[#c01863] transition-all shadow-lg shadow-pink-100">
               Confirm order
             </button>
