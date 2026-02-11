@@ -86,7 +86,7 @@ export default function CartPage() {
         )}
       </div>
 
-      <div className="mt-8 bg-gray-100 p-8 rounded-xl grid grid-cols-2 gap-10">
+      <div className="mt-8 bg-gray-100 p-8 rounded-xl grid grid-cols-2 gap-10 text-black">
         <div>
           <h3 className="font-bold text-xl mb-2">Payment Summary</h3>
           <p className="text-xs text-gray-400 mb-6">

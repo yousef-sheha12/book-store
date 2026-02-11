@@ -20,10 +20,13 @@ export default function BookPage() {
   const [activeCategory, setActiveCategory] = useState("All Categories");
   const [page, setPage] = useState(1);
   const [pageSize] = useState(8);
-  const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
 
-  const { toggleWishlist, addToCart, wishlist } = useShopStore();
+  const { toggleWishlist, addToCart, wishlist, searchQuery } = useShopStore();
+  const [search, setSearch] = useState(searchQuery);
+  useEffect(() => {
+    setSearch(searchQuery); // ✅ لما السيرش يتغير في الهيدر يتحدث هنا
+  }, [searchQuery]);
   const navigate = useNavigate();
 
   const filteredBooks = books.filter((b) => {
@@ -109,7 +112,7 @@ export default function BookPage() {
                           type="radio"
                           name="cat"
                           checked={activeCategory === cat.name}
-                          className="radio radio-xs radio-secondary"
+                          className="radio radio-xs radio-error "
                           readOnly
                         />
                         <span
@@ -188,7 +191,7 @@ export default function BookPage() {
                     key={book.id}
                     className="bg-white p-6 rounded-lg shadow-sm border border-gray-50 flex flex-col md:flex-row gap-6"
                   >
-                    <Link to="/productdetails">
+                    <Link to={`/productdetails/${book.id}`}>
                       <img
                         src={book.image}
                         alt={book.title}

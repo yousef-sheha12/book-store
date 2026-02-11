@@ -21,10 +21,12 @@ export const useAuthStore = create(
     },
   ),
 );
-
 export const useShopStore = create(
   persist(
     (set, get) => ({
+      searchQuery: "",
+      setSearchQuery: (query) => set({ searchQuery: query }),
+
       cart: [],
       wishlist: [],
 
@@ -50,19 +52,19 @@ export const useShopStore = create(
           cart: state.cart.filter((item) => item.id !== productId),
         })),
 
-      increaseQuantity: (productId) => {
+      increaseQuantity: (productId) =>
         set((state) => ({
           cart: state.cart.map((item) =>
             item.id === productId
               ? { ...item, quantity: item.quantity + 1 }
               : item,
           ),
-        }));
-      },
+        })),
 
       decreaseQuantity: (productId) => {
         const cart = get().cart;
         const item = cart.find((i) => i.id === productId);
+        if (!item) return;
 
         if (item.quantity > 1) {
           set({
@@ -77,6 +79,8 @@ export const useShopStore = create(
         }
       },
 
+      clearCart: () => set({ cart: [] }),
+
       toggleWishlist: (product) => {
         const wishlist = get().wishlist;
         const isExisted = wishlist.find((item) => item.id === product.id);
@@ -90,7 +94,9 @@ export const useShopStore = create(
         }
       },
 
-      getCartCount: () => get().cart.length,
+      getCartCount: () =>
+        get().cart.reduce((total, item) => total + item.quantity, 0),
+
       getWishlistCount: () => get().wishlist.length,
     }),
     {

@@ -17,7 +17,7 @@ export default function ForgetPasswordPage() {
       );
 
       if (res.status === 200) {
-        navigate("/add-code", { state: { email: email } }); // نمرر الإيميل للصفحة التالية
+        navigate("/add-code", { state: { email: email } });
       }
     } catch (err) {
       alert(err.response?.data?.error?.message || "Error occurred");

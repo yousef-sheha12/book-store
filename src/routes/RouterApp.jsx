@@ -45,7 +45,7 @@ export default function RouterApp() {
               <Route path="/wishlist" element={<WishlistPage />} />
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/books" element={<BookPage />} />
-              <Route path="/productdetails" element={<ProductDetails />} />
+              <Route path="/productdetails/:id" element={<ProductDetails />} />
             </Route>
           </Route>
         </Route>

@@ -20,7 +20,7 @@ import "swiper/css/autoplay";
 
 import books from "../books.json";
 import { useShopStore } from "../store";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function HomePage() {
@@ -128,7 +128,7 @@ export default function HomePage() {
             autoplay={
               books.length > 1
                 ? {
-                    delay: 500,
+                    delay: 1200,
                     disableOnInteraction: false,
                   }
                 : false
@@ -141,9 +141,12 @@ export default function HomePage() {
             }}
             className="mySwiper pb-14"
           >
-            {books.map((book) => (
+            {books.slice(10, 20).map((book) => (
               <SwiperSlide key={book.id}>
-                <div className="transition-transform duration-300 hover:scale-105">
+                <div
+                  onClick={() => navigate(`/productdetails/${book.id}`)}
+                  className="transition-transform duration-300 hover:scale-105"
+                >
                   <img
                     src={book.image}
                     width={100}
@@ -157,9 +160,11 @@ export default function HomePage() {
           </Swiper>
         </div>
 
-        <button className="bg-[#d81b60] hover:bg-[#ad1457] text-white font-semibold py-3 px-10 rounded-lg transition-colors duration-300">
-          Shop now
-        </button>
+        <Link to="/books">
+          <button className="bg-[#d81b60] hover:bg-[#ad1457] text-white font-semibold py-3 px-10 rounded-lg transition-colors duration-300">
+            Shop now
+          </button>
+        </Link>
 
         <style>
           {`
@@ -191,11 +196,13 @@ export default function HomePage() {
                     key={book.id}
                     className="bg-white p-6 rounded-sm shadow-sm flex flex-col sm:flex-row gap-6 border border-gray-100"
                   >
-                    <img
-                      src={book.image}
-                      alt={book.title}
-                      className="w-full sm:w-40 h-56 object-cover rounded-sm shadow-md"
-                    />
+                    <Link to={`/productdetails/${book.id}`}>
+                      <img
+                        src={book.image}
+                        alt={book.title}
+                        className="w-full sm:w-40 h-56 object-cover rounded-sm shadow-md"
+                      />
+                    </Link>
 
                     <div className="flex-1 flex flex-col justify-between">
                       <div>
@@ -294,12 +301,13 @@ export default function HomePage() {
                     key={book.id}
                     className="bg-white p-6 rounded-sm shadow-sm flex flex-col sm:flex-row gap-6 border border-gray-100"
                   >
-                    <img
-                      src={book.image}
-                      alt={book.title}
-                      className="w-full sm:w-40 h-56 object-cover rounded-sm shadow-md"
-                    />
-
+                    <Link to={`/productdetails/${book.id}`}>
+                      <img
+                        src={book.image}
+                        alt={book.title}
+                        className="w-full sm:w-40 h-56 object-cover rounded-sm shadow-md"
+                      />
+                    </Link>
                     <div className="flex-1 flex flex-col justify-between">
                       <div>
                         <h3 className="text-xl font-bold text-gray-900">
