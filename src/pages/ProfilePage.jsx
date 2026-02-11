@@ -13,7 +13,7 @@ const ProfilePage = () => {
       updateUser(res.data);
     };
     fetchUserData();
-  }, []);
+  }, [token, updateUser]);
 
   const userData = useAuthStore((state) => state.userData);
   const updateUser = useAuthStore((state) => state.updateUser);
