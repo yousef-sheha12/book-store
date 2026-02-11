@@ -32,7 +32,6 @@ export default function CartPage() {
               </div>
             </div>
 
-            {/* Quantity Controls */}
             <div className="flex-1 flex justify-center items-center gap-3">
               <button className="btn btn-circle btn-xs btn-outline border-pink-400 text-pink-500">
                 -

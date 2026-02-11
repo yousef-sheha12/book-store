@@ -12,10 +12,8 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
-  // 1. اجلب دالة الـ login من الـ Store
   const login = useAuthStore((state) => state.login);
 
-  /* ================= API ================= */
   const handleLogin = async (values) => {
     try {
       const res = await axios.post("http://localhost:1337/api/auth/local", {
@@ -25,11 +23,8 @@ export default function LoginPage() {
 
       const token = res.data.jwt;
 
-      // 2. استخدم دالة الـ Store بدلاً من localStorage.setItem يدوياً
-      // دي هتخلي isAuthenticated تبقى true فوراً والـ Router يشوفها
       login(token);
 
-      // 3. التوجيه هيشتغل دلوقتي لأن الـ Store اتحدث
       navigate("/");
     } catch (error) {
       console.error("Login Error:", error.response?.data);
@@ -37,13 +32,11 @@ export default function LoginPage() {
     }
   };
 
-  /* ================= Validation ================= */
   const loginSchema = Yup.object({
     email: Yup.string().email("Invalid email").required("Email required"),
     password: Yup.string().required("Password required"),
   });
 
-  /* ================= UI (Unchanged) ================= */
   return (
     <main className="flex-grow flex justify-center items-center bg-gray-50 py-20 px-4 text-black">
       <Formik
@@ -55,7 +48,6 @@ export default function LoginPage() {
         onSubmit={handleLogin}
       >
         <Form className="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl space-y-4">
-          {/* Email */}
           <div>
             <label className="font-bold text-sm">Email</label>
             <Field
@@ -71,7 +63,6 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* Password */}
           <div className="relative">
             <label className="font-bold text-sm">Password</label>
             <Field
@@ -100,7 +91,6 @@ export default function LoginPage() {
             </Link>
           </div>
 
-          {/* Submit */}
           <button
             type="submit"
             className="w-full bg-[#d81b60] text-white py-3 rounded-lg font-bold hover:bg-[#b0154b] disabled:opacity-60"
@@ -108,7 +98,6 @@ export default function LoginPage() {
             Login
           </button>
 
-          {/* Links */}
           <p className="text-center text-sm">
             Don't have an account?
             <Link to="/signup" className="text-pink-600 font-bold ml-2">
@@ -116,7 +105,6 @@ export default function LoginPage() {
             </Link>
           </p>
 
-          {/* Social */}
           <div className="space-y-2">
             <button className="w-full border py-3 rounded-lg flex justify-center gap-2">
               <FcGoogle /> Google

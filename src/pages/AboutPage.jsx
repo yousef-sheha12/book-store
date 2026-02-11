@@ -8,17 +8,15 @@ import {
   RotateCcw,
   Truck,
 } from "lucide-react";
-import React from "react";
 import { useState } from "react";
 import axios from "axios";
 
 export default function AboutPage() {
-  // 1. تأكد من أسماء الحقول (Fields) كما يتوقعها API Eraasoft
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "0123456789", // الـ API ده غالباً بيطلب رقم تليفون إجباري
-    subject: "General Inquiry", // حقل موضوع الرسالة مطلوب أحياناً
+    phone: "0123456789",
+    subject: "General Inquiry",
     message: "",
   });
 
@@ -27,13 +25,12 @@ export default function AboutPage() {
 
     try {
       const res = await axios.post(
-        "https://bookstore.eraasoft.pro/api/contact", // الرابط الأكثر استقراراً لديهم
+        "https://bookstore.eraasoft.pro/api/contact",
         formData,
         {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
-            // لو لسه بيدي 401 أو 403 ضيف التوكن هنا
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         },
@@ -43,7 +40,6 @@ export default function AboutPage() {
       alert("Sent Successfully!");
     } catch (error) {
       console.error("Error Detail:", error.response?.data);
-      // لو طلع خطأ 422 (Validation) هتلاقي جوا الـ data دي الحقول اللي ناقصة
       alert(
         "Failed: " +
           JSON.stringify(error.response?.data?.errors || "Server Error"),
@@ -57,37 +53,15 @@ export default function AboutPage() {
       [e.target.name]: e.target.value,
     });
   };
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault(); // منع الصفحة من الـ Refresh
-  //   setLoading(true);
 
-  //   try {
-  //     const res = await axios.post(
-  //       "https://bookstore.eraasoft.pro/api/contacts/store",
-  //       formData,
-  //     );
-
-  //     if (res.status === 200 || res.status === 201) {
-  //       toast.success("Message sent successfully!"); // أو استخدم toast
-  //       setFormData({ name: "", email: "", message: "" }); // تفريغ الحقول بعد النجاح
-  //     }
-  //   } catch (error) {
-  //     console.error("Error sending message:", error.response?.data);
-  //     alert(error.response?.data?.message || "Something went wrong!");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   return (
     <div className="font-sans antialiased">
-      {/* --- Section 1: Our Mission --- */}
       <section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
             Our Mission
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Card 1 */}
             <div className="bg-[#f8f9fa] p-8 rounded-lg shadow-sm">
               <h3 className="text-lg font-bold mb-4 text-gray-800">
                 Quality Selection
@@ -103,7 +77,6 @@ export default function AboutPage() {
                 View More <ArrowRight size={14} />
               </a>
             </div>
-            {/* Card 2 */}
             <div className="bg-[#f8f9fa] p-8 rounded-lg shadow-sm">
               <h3 className="text-lg font-bold mb-4 text-gray-800">
                 Exceptional Service
@@ -119,7 +92,6 @@ export default function AboutPage() {
                 View More <ArrowRight size={14} />
               </a>
             </div>
-            {/* Card 3 */}
             <div className="bg-[#f8f9fa] p-8 rounded-lg shadow-sm">
               <h3 className="text-lg font-bold mb-4 text-gray-800">
                 Set Up Stores
@@ -139,9 +111,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* --- Section 2: Contact Us (Get in Touch) --- */}
       <section className="relative py-20 bg-[#3b2d4a] text-white overflow-hidden">
-        {/* خلفية شفافة بسيطة (أيقونة مكتبة أو مخطط كما في الصورة) */}
         <div className="absolute inset-0 opacity-10 pointer-events-none">
           <div className="absolute right-0 bottom-0 w-1/2 h-full border-l border-t border-gray-400"></div>
         </div>
@@ -223,7 +193,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* --- Section 3: Features Footer --- */}
       <section className="bg-white py-25 border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-left">
           <div className="flex flex-col gap-3">

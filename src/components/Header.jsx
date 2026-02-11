@@ -1,22 +1,14 @@
-// components/Header.jsx
 import { Search } from "lucide-react";
 import Navbar from "./Navbar/Navbar";
 import BackgroundImg from "../assets/images/Home.png";
-import { useAuthStore } from "../store"; // تأكد من المسار
+import { useAuthStore } from "../store";
 import NavbarAuth from "./Navbar/NavbarAuth";
 
 export default function Header({ variant }) {
-  // جلب حالة التسجيل وبيانات التوكن من Zustand
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  // const token = useAuthStore((state) => state.token);
-
-  // ملاحظة: بما أنك لم تضف حقول إضافية في Strapi،
-  // سنقوم بفك التوكن أو الاعتماد على البيانات المخزنة في الـ Store
-  // سنفترض أنك قمت بتخزين الـ user داخل الـ store أو سنمرر الـ token فقط
 
   return (
     <header className="relative w-full overflow-hidden bg-[#1f1d2b]">
-      {/* 1. الخلفية الثابتة */}
       <div className="absolute inset-0 z-0">
         <img
           src={BackgroundImg}
@@ -26,12 +18,10 @@ export default function Header({ variant }) {
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
-      {/* 2. النافبار - نمرر التوكن أو بيانات المستخدم هنا */}
       <div className="relative z-50">
         {isAuthenticated ? <NavbarAuth /> : <Navbar />}
       </div>
 
-      {/* 3. المحتوى المتغير (Home, About, Books) */}
       <div className="relative z-10 w-full">
         {variant === "home" && (
           <div className="h-screen w-full flex flex-col items-center justify-center pt-20">
@@ -73,6 +63,9 @@ export default function Header({ variant }) {
           <div className="h-40 flex items-center justify-center"></div>
         )}
         {variant === "wishlist" && (
+          <div className="h-40 flex items-center justify-center"></div>
+        )}
+        {variant === "checkout" && (
           <div className="h-40 flex items-center justify-center"></div>
         )}
         {variant === "profile" && (

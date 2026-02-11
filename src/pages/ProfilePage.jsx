@@ -4,7 +4,6 @@ import * as Yup from "yup";
 import axios from "axios";
 
 const ProfilePage = () => {
-  // 1. مخطط التحقق (Validation Schema)
   const validationSchema = Yup.object({
     firstName: Yup.string().required("الاسم الأول مطلوب"),
     lastName: Yup.string().required("الاسم الأخير مطلوب"),
@@ -15,7 +14,6 @@ const ProfilePage = () => {
     address: Yup.string().required("العنوان مطلوب"),
   });
 
-  // 2. القيم الابتدائية
   const initialValues = {
     firstName: "John",
     lastName: "Smith",
@@ -49,7 +47,6 @@ const ProfilePage = () => {
         >
           {({ isSubmitting }) => (
             <Form className="space-y-5">
-              {/* Row: First Name & Last Name */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex flex-col">
                   <label className="text-sm text-gray-400 mb-1">
@@ -82,7 +79,6 @@ const ProfilePage = () => {
                 </div>
               </div>
 
-              {/* Email */}
               <div className="flex flex-col">
                 <label className="text-sm text-gray-400 mb-1">Email</label>
                 <Field
@@ -97,7 +93,6 @@ const ProfilePage = () => {
                 />
               </div>
 
-              {/* Phone Number */}
               <div className="flex flex-col">
                 <label className="text-sm text-gray-400 mb-1">
                   Phone number
@@ -113,7 +108,6 @@ const ProfilePage = () => {
                 />
               </div>
 
-              {/* Address */}
               <div className="flex flex-col">
                 <label className="text-sm text-gray-400 mb-1">Address</label>
                 <Field
@@ -127,7 +121,6 @@ const ProfilePage = () => {
                 />
               </div>
 
-              {/* Submit Button */}
               <div className="flex justify-center pt-4">
                 <button
                   type="submit"

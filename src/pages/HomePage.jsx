@@ -13,11 +13,9 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 
-// استيراد ستايلات Swiper
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
-// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 export default function HomePage() {
   const features = [
@@ -83,29 +81,16 @@ export default function HomePage() {
     getFlashSale();
   }, []);
 
-  // const navigate = useNavigate();
-  // useEffect(() => {
-  //   const token =
-  //     localStorage.getItem("token") || sessionStorage.getItem("token");
-  //   if (!token) {
-  //     navigate("/login");
-  //     return;
-  //   }
-  // }, []);
-
   return (
     <>
       <section className="bg-[#f8f9fa] py-25 px-4">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((item, index) => (
             <div key={index} className="flex flex-col items-start space-y-4">
-              {/* Icon */}
               <div className="mb-2">{item.icon}</div>
 
-              {/* Title */}
               <h3 className="text-lg font-bold text-gray-800">{item.title}</h3>
 
-              {/* Description */}
               <p className="text-gray-500 leading-relaxed text-sm">
                 {item.description}
               </p>
@@ -114,7 +99,6 @@ export default function HomePage() {
         </div>
       </section>
       <section className="bg-[#3b2d4a] py-20 px-4 text-white text-center">
-        {/* Header Section */}
         <div className="max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl font-bold mb-4">Best Seller</h2>
           <p className="text-gray-300">
@@ -124,12 +108,10 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* Swiper Slider */}
         <div className="max-w-6xl mx-auto mb-12 w-full">
           <Swiper
             modules={[Pagination, Autoplay]}
             spaceBetween={20}
-            // لا تفعل الـ loop إلا إذا كان عدد الكتب أكبر من 6 (أقصى slidesPerView عندك)
             loop={books.length > 6}
             autoplay={
               books.length > 1
@@ -163,12 +145,10 @@ export default function HomePage() {
           </Swiper>
         </div>
 
-        {/* Action Button */}
         <button className="bg-[#d81b60] hover:bg-[#ad1457] text-white font-semibold py-3 px-10 rounded-lg transition-colors duration-300">
           Shop now
         </button>
 
-        {/* تخصيص شكل النقاط (Bullets) لـ Swiper لتناسب التصميم */}
         <style>
           {`
     .swiper-pagination-bullet {
@@ -183,7 +163,6 @@ export default function HomePage() {
         </style>
       </section>
       <div className="font-sans antialiased">
-        {/* --- Section 1: Recommended For You --- */}
         <section className="bg-[#f8f9fa] py-16 px-4">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-2xl font-bold text-gray-800 mb-8">
@@ -254,7 +233,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* --- Section 2: Flash Sale --- */}
         <section className="bg-white py-16 px-4 border-t border-gray-100">
           <div className="max-w-6xl mx-auto">
             <div className="flex justify-between items-end mb-8">
@@ -267,7 +245,6 @@ export default function HomePage() {
                   Mauris et ultricies est. Aliquam in justo varius.
                 </p>
               </div>
-              {/* تم إلغاء التايمر بناءً على طلبك واستبداله بمساحة فارغة أو أزرار تحكم */}
               <div className="hidden md:flex gap-2">
                 <button className="p-2 bg-gray-100 rounded-full text-gray-400 hover:bg-gray-200">
                   <ChevronLeft size={24} />

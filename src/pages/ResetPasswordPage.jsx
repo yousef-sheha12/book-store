@@ -6,7 +6,6 @@ export default function ResetPasswordPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // استلام البيانات من الصفحة اللي فاتت (AddCodePage)
   const email = location.state?.email;
   const code = location.state?.code;
 
@@ -22,9 +21,9 @@ export default function ResetPasswordPage() {
       const res = await axios.post(
         "http://localhost:1337/api/auth/reset-password",
         {
-          code: code, // الكود الذي استلمه المستخدم في الإيميل
+          code: code,
           password: password,
-          passwordConfirmation: passwordConfirmation, // التسمية الخاصة بـ Strapi
+          passwordConfirmation: passwordConfirmation,
         },
       );
 

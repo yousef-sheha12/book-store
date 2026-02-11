@@ -13,12 +13,12 @@ export default function MainLayout() {
     if (location.pathname === "/login") return "login";
     if (location.pathname === "/cart") return "cart";
     if (location.pathname === "/wishlist") return "wishlist";
+    if (location.pathname === "/checkout") return "checkout";
     if (location.pathname === "/profile") return "profile";
     return "home";
   };
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      {/* نمرر بيانات اليوزر للهيدر هنا */}
       <Header variant={getVariant()} />
       <main className="flex-grow">
         <Outlet />

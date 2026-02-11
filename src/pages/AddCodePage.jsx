@@ -4,10 +4,8 @@ import axios from "axios";
 
 export default function AddCodePage() {
   const [code, setCode] = useState("");
-  //   const location = useLocation();
   const navigate = useNavigate();
 
-  // تأمين الوصول: لو مفيش إيميل ارجع لصفحة نسيان الباسورد
   const email = location.state?.email;
 
   useEffect(() => {
@@ -36,7 +34,6 @@ export default function AddCodePage() {
       );
 
       if (res.status === 200 || res.status === 201) {
-        // بننقل الإيميل والكود لصفحة تعيين الباسورد الجديد
         navigate("/reset-password", { state: { email, code } });
       }
     } catch (err) {
@@ -61,7 +58,7 @@ export default function AddCodePage() {
             <input
               type="text"
               placeholder="0000"
-              maxLength="6" // الـ API ساعات بيطلب 4 وساعات 6، ظبطها حسب حاجتك
+              maxLength="6"
               value={code}
               onChange={(e) => setCode(e.target.value)}
               className="w-full p-4 border text-black border-gray-300 rounded-md text-center text-3xl tracking-[15px] font-bold focus:border-[#d81b60] outline-none transition-all"

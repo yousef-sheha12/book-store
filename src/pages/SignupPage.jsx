@@ -13,34 +13,28 @@ export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
-  /* ================= API (Strapi Configured) ================= */
   const handleSignup = async (values) => {
     try {
       const res = await axios.post(
         "http://localhost:1337/api/auth/local/register",
         {
-          // Strapi يتطلب username إجبارياً، لذا نضع فيه قيمة الإيميل
           username: values.email,
           email: values.email,
           password: values.password,
         },
       );
 
-      // Strapi يعيد التوكن في حقل jwt
       const token = res.data.jwt;
 
       sessionStorage.setItem("token", token);
 
-      // التوجيه لصفحة تسجيل الدخول أو الصفحة الرئيسية حسب منطق تطبيقك
       navigate("/login");
     } catch (error) {
       console.log(error.response?.data);
-      // عرض رسالة الخطأ القادمة من Strapi
       alert(error.response?.data?.error?.message || "Registration failed ❌");
     }
   };
 
-  /* ================= Validation ================= */
   const registerSchema = Yup.object({
     firstName: Yup.string().required("First name required"),
     lastName: Yup.string().required("Last name required"),
@@ -53,7 +47,6 @@ export default function SignupPage() {
       .required("Confirm password required"),
   });
 
-  /* ================= UI (Unchanged) ================= */
   return (
     <main className="flex-grow flex justify-center items-center bg-gray-50 py-20 px-4 text-black">
       <Formik
@@ -68,7 +61,6 @@ export default function SignupPage() {
         onSubmit={handleSignup}
       >
         <Form className="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl space-y-4">
-          {/* First Name */}
           <div>
             <label className="font-bold text-sm">First Name</label>
             <Field
@@ -83,7 +75,6 @@ export default function SignupPage() {
             />
           </div>
 
-          {/* Last Name */}
           <div>
             <label className="font-bold text-sm">Last Name</label>
             <Field
@@ -98,7 +89,6 @@ export default function SignupPage() {
             />
           </div>
 
-          {/* Email */}
           <div>
             <label className="font-bold text-sm">Email</label>
             <Field
@@ -114,7 +104,6 @@ export default function SignupPage() {
             />
           </div>
 
-          {/* Password */}
           <div className="relative">
             <label className="font-bold text-sm">Password</label>
             <Field
@@ -137,7 +126,6 @@ export default function SignupPage() {
             />
           </div>
 
-          {/* Confirm */}
           <div className="relative">
             <label className="font-bold text-sm">Confirm Password</label>
             <Field
@@ -160,7 +148,6 @@ export default function SignupPage() {
             />
           </div>
 
-          {/* Submit */}
           <button
             type="submit"
             className="w-full bg-[#d81b60] text-white py-3 rounded-lg font-bold hover:bg-[#b0154b]"
@@ -168,7 +155,6 @@ export default function SignupPage() {
             Sign Up
           </button>
 
-          {/* Links */}
           <p className="text-center text-sm">
             Already have an account?
             <Link to="/login" className="text-pink-600 font-bold ml-2">
@@ -176,7 +162,6 @@ export default function SignupPage() {
             </Link>
           </p>
 
-          {/* Social */}
           <div className="space-y-2">
             <button className="w-full border py-3 rounded-lg flex justify-center gap-2">
               <FcGoogle /> Google

@@ -73,7 +73,6 @@ export default function BookPage() {
   return (
     <div className="bg-[#f8f9fa] min-h-screen p-4 md:p-8">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
-        {/* --- Sidebar (Filter) --- */}
         <aside className="w-full lg:w-70 space-y-6">
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
             <div className="flex items-center gap-2 mb-6 border-b pb-4">
@@ -120,9 +119,7 @@ export default function BookPage() {
           </div>
         </aside>
 
-        {/* --- Main Content --- */}
         <main className="flex-1">
-          {/* Search and Sort */}
           <div className="flex flex-col md:flex-row gap-4 mb-6">
             <div className="relative flex-1">
               <input
@@ -151,7 +148,6 @@ export default function BookPage() {
             </select>
           </div>
 
-          {/* Tags / Quick Categories */}
           <div className="flex flex-wrap gap-2 mb-8">
             {tags.map((tag) => (
               <button
@@ -168,7 +164,6 @@ export default function BookPage() {
             ))}
           </div>
 
-          {/* Book List */}
           <div className="space-y-6">
             {currentBooks.map((book, index) => (
               <div

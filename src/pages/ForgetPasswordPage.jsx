@@ -26,7 +26,6 @@ export default function ForgetPasswordPage() {
 
   return (
     <div className="flex h-screen flex-col items-center justify-center py-20 px-4 bg-[#f8f9fa]">
-      {/* Header Section */}
       <h2 className="text-[#d81b60] text-2xl font-bold mb-2">
         Forget Password?
       </h2>
@@ -34,7 +33,6 @@ export default function ForgetPasswordPage() {
         Enter your email to reset your password
       </p>
 
-      {/* Form Section */}
       <form
         onSubmit={handleForgetPassword}
         className="w-full max-w-md bg-white p-8 rounded-lg shadow-sm"
@@ -61,7 +59,6 @@ export default function ForgetPasswordPage() {
         </button>
       </form>
 
-      {/* Back to Login */}
       <button
         onClick={() => navigate("/login")}
         className="mt-6 text-sm text-gray-500 hover:text-[#d81b60] font-medium"
