@@ -59,6 +59,13 @@ export default function Header({ variant }) {
         {variant === "books" && (
           <div className="h-40 flex items-center justify-center"></div>
         )}
+        {variant === "productdetails" && (
+          <div className="h-40 flex items-center justify-center"></div>
+        )}
+
+        {variant === "profile" && (
+          <div className="h-80 flex items-center justify-center"></div>
+        )}
         {variant === "cart" && (
           <div className="h-40 flex items-center justify-center"></div>
         )}
@@ -67,9 +74,6 @@ export default function Header({ variant }) {
         )}
         {variant === "checkout" && (
           <div className="h-40 flex items-center justify-center"></div>
-        )}
-        {variant === "profile" && (
-          <div className="h-80 flex items-center justify-center"></div>
         )}
       </div>
     </header>

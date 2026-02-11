@@ -2,15 +2,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { ShoppingCart, Heart } from "lucide-react";
 import LinkItem from "../ui/LinkItem";
 import NavbarLogo from "./NavbarLogo";
-import { useAuthStore } from "../../store";
+import { useAuthStore, useShopStore } from "../../store";
 
 export default function NavbarAuth() {
   const navigate = useNavigate();
   const logout = useAuthStore((state) => state.logout);
   const userData = useAuthStore((state) => state.userData);
+  const cart = useShopStore((state) => state.cart);
+  const wishlist = useShopStore((state) => state.wishlist);
+
   const handleLogout = () => {
     logout();
-
     navigate("/login");
   };
   return (
@@ -47,16 +49,20 @@ export default function NavbarAuth() {
             size={24}
             className="text-gray-700 hover:text-gray-900"
           />
-          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-            0
-          </span>
+          {cart.length > 0 && (
+            <span className="absolute top-0 right-0 bg-[#E11D74] text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center animate-bounce-short shadow-md border-2 border-white">
+              {cart.length}
+            </span>
+          )}
         </Link>
 
         <Link to="/wishlist" className="relative">
           <Heart size={24} className="text-gray-700 hover:text-gray-900" />
-          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-            0
-          </span>
+          {wishlist.length > 0 && (
+            <span className="absolute top-0 right-0 bg-[#E11D74] text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-md border-2 border-white">
+              {wishlist.length}
+            </span>
+          )}
         </Link>
 
         <div>

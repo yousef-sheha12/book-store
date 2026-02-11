@@ -9,6 +9,8 @@ export default function MainLayout() {
     if (location.pathname === "/") return "home";
     if (location.pathname === "/about") return "about";
     if (location.pathname.startsWith("/books")) return "books";
+    if (location.pathname.startsWith("/productdetails"))
+      return "productdetails";
     if (location.pathname === "/signup") return "signup";
     if (location.pathname === "/login") return "login";
     if (location.pathname === "/cart") return "cart";

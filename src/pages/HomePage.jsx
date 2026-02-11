@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
 import {
   Truck,
   CreditCard,
@@ -16,8 +17,16 @@ import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
-import axios from "axios";
+
+import books from "../books.json";
+import { useShopStore } from "../store";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
 export default function HomePage() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const features = [
     {
       icon: <Truck size={32} className="text-gray-600" />,
@@ -45,41 +54,44 @@ export default function HomePage() {
     },
   ];
 
-  const [recommendedBooks, setRecommendedBooks] = useState([]);
-  const [books, setBooks] = useState([]);
-  const [sale, setSale] = useState([]);
-  const getRecommen = async () => {
-    try {
-      const res = await axios.get("https://bookstore.eraasoft.pro/api/home");
-      setRecommendedBooks(res.data.data.recommended || []);
-      console.log(res.data);
-    } catch (error) {
-      console.log(error.error);
-    }
-  };
-  const getAllBooks = async () => {
-    try {
-      const res = await axios.get("https://bookstore.eraasoft.pro/api/home");
-      setBooks(res.data.data.best_selling_image || []);
-      console.log(res.data);
-    } catch (error) {
-      console.log(error.error);
-    }
-  };
-  const getFlashSale = async () => {
-    try {
-      const res = await axios.get("https://bookstore.eraasoft.pro/api/home");
-      setSale(res.data.data.flashSales || []);
-      console.log(res.data);
-    } catch (error) {
-      console.log(error.error);
-    }
-  };
-  useEffect(() => {
-    getRecommen();
-    getAllBooks();
-    getFlashSale();
-  }, []);
+  // const [recommendedBooks, setRecommendedBooks] = useState([]);
+  // const [books, setBooks] = useState([]);
+  // const [sale, setSale] = useState([]);
+  // const getRecommen = async () => {
+  //   try {
+  //     const res = await axios.get("https://bookstore.eraasoft.pro/api/home");
+  //     setRecommendedBooks(res.data.data.recommended || []);
+  //     console.log(res.data);
+  //   } catch (error) {
+  //     console.log(error.error);
+  //   }
+  // };
+  // const getAllBooks = async () => {
+  //   try {
+  //     const res = await axios.get("https://bookstore.eraasoft.pro/api/home");
+  //     setBooks(res.data.data.best_selling_image || []);
+  //     console.log(res.data);
+  //   } catch (error) {
+  //     console.log(error.error);
+  //   }
+  // };
+  // const getFlashSale = async () => {
+  //   try {
+  //     const res = await axios.get("https://bookstore.eraasoft.pro/api/home");
+  //     setSale(res.data.data.flashSales || []);
+  //     console.log(res.data);
+  //   } catch (error) {
+  //     console.log(error.error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   getRecommen();
+  //   getAllBooks();
+  //   getFlashSale();
+  // }, []);
+
+  const { toggleWishlist, addToCart, wishlist } = useShopStore();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -170,65 +182,82 @@ export default function HomePage() {
             </h2>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {recommendedBooks?.map((book) => (
-                <div
-                  key={book.bookId}
-                  className="bg-white p-6 rounded-sm shadow-sm flex flex-col sm:flex-row gap-6 border border-gray-100"
-                >
-                  <img
-                    // src={book.image}
-                    alt={book.bookName}
-                    className="w-full sm:w-40 h-56 object-cover rounded-sm shadow-md"
-                  />
+              {books.slice(5, 9).map((book) => {
+                const isInWishlist = wishlist.some(
+                  (item) => item.id === book.id,
+                );
+                return (
+                  <div
+                    key={book.id}
+                    className="bg-white p-6 rounded-sm shadow-sm flex flex-col sm:flex-row gap-6 border border-gray-100"
+                  >
+                    <img
+                      src={book.image}
+                      alt={book.title}
+                      className="w-full sm:w-40 h-56 object-cover rounded-sm shadow-md"
+                    />
 
-                  <div className="flex-1 flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900">
-                        {book.bookName}
-                      </h3>
-                      <p className="text-sm text-gray-500 mb-2 underline">
-                        Author: {book.author}
-                      </p>
-                      <p className="text-xs text-gray-400 leading-relaxed mb-4 line-clamp-3">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Mauris et ultricies est. Aliquam in justo varius,
-                        sagittis neque ut, malesuada leo.
-                      </p>
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900">
+                          {book.title}
+                        </h3>
+                        <p className="text-sm text-gray-500 mb-2 underline">
+                          Author: {book.author}
+                        </p>
+                        <p className="text-xs text-gray-400 leading-relaxed mb-4 line-clamp-3">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Mauris et ultricies est. Aliquam in justo
+                          varius, sagittis neque ut, malesuada leo.
+                        </p>
 
-                      <div className="flex items-center gap-1 mb-1">
-                        {[...Array(4)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={14}
-                            className="fill-yellow-400 text-yellow-400"
-                          />
-                        ))}
-                        <Star size={14} className="text-gray-300" />
-                        <span className="text-xs text-gray-400 ml-2">
-                          ({book.reviews} Review)
-                        </span>
+                        <div className="flex items-center gap-1 mb-1">
+                          {[...Array(4)].map((_, i) => (
+                            <Star
+                              key={i}
+                              size={14}
+                              className="fill-yellow-400 text-yellow-400"
+                            />
+                          ))}
+                          <Star size={14} className="text-gray-300" />
+                          <span className="text-xs text-gray-400 ml-2">
+                            ({book.reviews} Review)
+                          </span>
+                        </div>
+                        <p className="text-xs text-gray-500 font-semibold mb-2">
+                          Rate: {book.rating}
+                        </p>
                       </div>
-                      <p className="text-xs text-gray-500 font-semibold mb-2">
-                        Rate: {book.rate}
-                      </p>
-                    </div>
 
-                    <div className="flex items-center justify-between mt-4">
-                      <span className="text-2xl font-bold text-gray-800">
-                        {book.price}
-                      </span>
-                      <div className="flex gap-2">
-                        <button className="bg-[#d81b60] text-white px-4 py-2 rounded-md flex items-center gap-2 text-sm font-semibold hover:bg-[#ad1457] transition-colors">
-                          Add To Cart <ShoppingCart size={16} />
-                        </button>
-                        <button className="p-2 border border-pink-200 rounded-md text-[#d81b60] hover:bg-pink-50 transition-colors">
-                          <Heart size={20} />
-                        </button>
+                      <div className="flex items-center justify-between mt-4">
+                        <span className="text-2xl font-bold text-gray-800">
+                          {book.price}
+                        </span>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => {
+                              addToCart(book);
+                              navigate("/cart");
+                            }}
+                            className="bg-[#d81b60] text-white px-4 py-2 rounded-md flex items-center gap-2 text-sm font-semibold hover:bg-[#ad1457] transition-colors"
+                          >
+                            Add To Cart <ShoppingCart size={16} />
+                          </button>
+                          <button
+                            onClick={() => toggleWishlist(book)}
+                            className="p-2 border border-pink-200 rounded-md text-[#d81b60] hover:bg-pink-50 transition-colors"
+                          >
+                            <Heart
+                              fill={isInWishlist ? "#E11D74" : "none"}
+                              size={20}
+                            />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
@@ -256,65 +285,82 @@ export default function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {sale?.map((book) => (
-                <div
-                  key={book.bookId}
-                  className="bg-white p-6 rounded-sm shadow-sm flex flex-col sm:flex-row gap-6 border border-gray-100"
-                >
-                  <img
-                    // src={book.image}
-                    alt={book.bookName}
-                    className="w-full sm:w-40 h-56 object-cover rounded-sm shadow-md"
-                  />
+              {books.slice(0, 2).map((book) => {
+                const isInWishlist = wishlist.some(
+                  (item) => item.id === book.id,
+                );
+                return (
+                  <div
+                    key={book.id}
+                    className="bg-white p-6 rounded-sm shadow-sm flex flex-col sm:flex-row gap-6 border border-gray-100"
+                  >
+                    <img
+                      src={book.image}
+                      alt={book.title}
+                      className="w-full sm:w-40 h-56 object-cover rounded-sm shadow-md"
+                    />
 
-                  <div className="flex-1 flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900">
-                        {book.bookName}
-                      </h3>
-                      <p className="text-sm text-gray-500 mb-2 underline">
-                        Author: {book.author}
-                      </p>
-                      <p className="text-xs text-gray-400 leading-relaxed mb-4 line-clamp-3">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Mauris et ultricies est. Aliquam in justo varius,
-                        sagittis neque ut, malesuada leo.
-                      </p>
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900">
+                          {book.title}
+                        </h3>
+                        <p className="text-sm text-gray-500 mb-2 underline">
+                          Author: {book.author}
+                        </p>
+                        <p className="text-xs text-gray-400 leading-relaxed mb-4 line-clamp-3">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Mauris et ultricies est. Aliquam in justo
+                          varius, sagittis neque ut, malesuada leo.
+                        </p>
 
-                      <div className="flex items-center gap-1 mb-1">
-                        {[...Array(4)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={14}
-                            className="fill-yellow-400 text-yellow-400"
-                          />
-                        ))}
-                        <Star size={14} className="text-gray-300" />
-                        <span className="text-xs text-gray-400 ml-2">
-                          ({book.reviews} Review)
-                        </span>
+                        <div className="flex items-center gap-1 mb-1">
+                          {[...Array(4)].map((_, i) => (
+                            <Star
+                              key={i}
+                              size={14}
+                              className="fill-yellow-400 text-yellow-400"
+                            />
+                          ))}
+                          <Star size={14} className="text-gray-300" />
+                          <span className="text-xs text-gray-400 ml-2">
+                            ({book.reviews} Review)
+                          </span>
+                        </div>
+                        <p className="text-xs text-gray-500 font-semibold mb-2">
+                          Rate: {book.rating}
+                        </p>
                       </div>
-                      <p className="text-xs text-gray-500 font-semibold mb-2">
-                        Rate: {book.rate}
-                      </p>
-                    </div>
 
-                    <div className="flex items-center justify-between mt-4">
-                      <span className="text-2xl font-bold text-gray-800">
-                        {book.price}
-                      </span>
-                      <div className="flex gap-2">
-                        <button className="bg-[#d81b60] text-white px-4 py-2 rounded-md flex items-center gap-2 text-sm font-semibold hover:bg-[#ad1457] transition-colors">
-                          Add To Cart <ShoppingCart size={16} />
-                        </button>
-                        <button className="p-2 border border-pink-200 rounded-md text-[#d81b60] hover:bg-pink-50 transition-colors">
-                          <Heart size={20} />
-                        </button>
+                      <div className="flex items-center justify-between mt-4">
+                        <span className="text-2xl font-bold text-gray-800">
+                          {book.price}
+                        </span>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => {
+                              addToCart(book);
+                              navigate("/cart");
+                            }}
+                            className="bg-[#d81b60] text-white px-4 py-2 rounded-md flex items-center gap-2 text-sm font-semibold hover:bg-[#ad1457] transition-colors"
+                          >
+                            Add To Cart <ShoppingCart size={16} />
+                          </button>
+                          <button
+                            onClick={() => toggleWishlist(book)}
+                            className="p-2 border border-pink-200 rounded-md text-[#d81b60] hover:bg-pink-50 transition-colors"
+                          >
+                            <Heart
+                              fill={isInWishlist ? "#E11D74" : "none"}
+                              size={20}
+                            />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>

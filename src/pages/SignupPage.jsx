@@ -6,9 +6,11 @@ import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import axios from "axios";
 import { useState } from "react";
+import { useAuthStore } from "../store";
 
 export default function SignupPage() {
   const navigate = useNavigate();
+  const { login, updateUser } = useAuthStore();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -24,13 +26,19 @@ export default function SignupPage() {
         },
       );
 
-      const token = res.data.jwt;
-
-      sessionStorage.setItem("token", token);
-
-      navigate("/login");
+      if (res.data.jwt) {
+        const token = res.data.jwt;
+        login(token);
+        updateUser({
+          ...res.data.user,
+          first_name: values.firstName,
+          last_name: values.lastName,
+        });
+        navigate("/");
+        console.log("Registered Successfully! ✅");
+      }
     } catch (error) {
-      console.log(error.response?.data);
+      console.log("Error Details:", error.response?.data);
       alert(error.response?.data?.error?.message || "Registration failed ❌");
     }
   };

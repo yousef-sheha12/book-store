@@ -2,6 +2,7 @@ import React from "react";
 import { BookMarked, Globe, ChevronRight } from "lucide-react";
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -17,15 +18,21 @@ const Footer = () => {
             </div>
 
             <nav className="flex gap-6 text-sm font-medium">
-              <a href="#" className="hover:text-gray-300 transition-colors">
+              <Link to="/" className="hover:text-gray-300 transition-colors">
                 Home
-              </a>
-              <a href="#" className="hover:text-gray-300 transition-colors">
+              </Link>
+              <Link
+                to="/books"
+                className="hover:text-gray-300 transition-colors"
+              >
                 Books
-              </a>
-              <a href="#" className="hover:text-gray-300 transition-colors">
+              </Link>
+              <Link
+                to="/about"
+                className="hover:text-gray-300 transition-colors"
+              >
                 About Us
-              </a>
+              </Link>
             </nav>
           </div>
 

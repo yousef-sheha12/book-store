@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Ticket,
   Truck,
@@ -19,6 +19,9 @@ const InputField = ({ label, placeholder, type = "text" }) => (
 );
 
 const CheckoutPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-12 font-sans">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import {
   Search,
@@ -10,12 +10,17 @@ import {
   ChevronLeft,
 } from "lucide-react";
 import books from "../books.json";
+import { useNavigate } from "react-router-dom";
+import { useShopStore } from "../store";
 
 export default function BookPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [activeCategory, setActiveCategory] = useState("Business");
 
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(8);
+  const [pageSize] = useState(8);
   const [search, setSearch] = useState("");
   // let filteredBooks =
   //   activeCategory === "All Categories"
@@ -69,6 +74,9 @@ export default function BookPage() {
     "Music",
     "Cooking",
   ];
+
+  const { toggleWishlist, addToCart, wishlist } = useShopStore();
+  const navigate = useNavigate();
 
   return (
     <div className="bg-[#f8f9fa] min-h-screen p-4 md:p-8">
@@ -165,80 +173,97 @@ export default function BookPage() {
           </div>
 
           <div className="space-y-6">
-            {currentBooks.map((book, index) => (
-              <div
-                key={index}
-                className="bg-white p-6 rounded-lg shadow-sm border border-gray-50 flex flex-col md:flex-row gap-6 relative"
-              >
-                <img
-                  src={book.image}
-                  alt={book.title}
-                  className="w-full md:w-36 h-52 object-cover rounded-md shadow-md"
-                />
+            {currentBooks.map((book, index) => {
+              const isInWishlist = wishlist.some((item) => item.id === book.id);
+              return (
+                <div
+                  key={index}
+                  className="bg-white p-6 rounded-lg shadow-sm border border-gray-50 flex flex-col md:flex-row gap-6 relative"
+                >
+                  <img
+                    src={book.image}
+                    alt={book.title}
+                    className="w-full md:w-36 h-52 object-cover rounded-md shadow-md"
+                  />
 
-                <div className="flex-1 flex flex-col justify-between">
-                  <div>
-                    <div className="flex justify-between items-start">
-                      <h3 className="text-xl font-bold text-gray-900">
-                        {book.title}
-                      </h3>
-                      <span className="text-[10px] text-[#f0a500] border border-[#f0a500] px-2 py-1 rounded-sm bg-orange-50 font-bold">
-                        25% Discount code: {book.discountCode}
-                      </span>
-                    </div>
-                    <p className="text-xs text-gray-400 mt-2 leading-relaxed max-w-xl">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Mauris et ultricies est. Aliquam in justo varius, sagittis
-                      neque ut, malesuada leo.
-                    </p>
-
-                    <div className="flex items-center gap-4 mt-4">
-                      <div className="flex items-center gap-1">
-                        {[...Array(4)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={14}
-                            className="fill-yellow-400 text-yellow-400"
-                          />
-                        ))}
-                        <Star size={14} className="text-gray-200" />
-                        <span className="text-xs text-gray-400 ml-1">
-                          ({book.reviews} Review)
+                  <div className="flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="flex justify-between items-start">
+                        <h3 className="text-xl font-bold text-gray-900">
+                          {book.title}
+                        </h3>
+                        <span className="text-[10px] text-[#f0a500] border border-[#f0a500] px-2 py-1 rounded-sm bg-orange-50 font-bold">
+                          25% Discount code: {book.discountCode}
                         </span>
                       </div>
-                      <span className="text-xs text-gray-500 font-semibold">
-                        Rate: {book.rating}
+                      <p className="text-xs text-gray-400 mt-2 leading-relaxed max-w-xl">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Mauris et ultricies est. Aliquam in justo varius,
+                        sagittis neque ut, malesuada leo.
+                      </p>
+
+                      <div className="flex items-center gap-4 mt-4">
+                        <div className="flex items-center gap-1">
+                          {[...Array(4)].map((_, i) => (
+                            <Star
+                              key={i}
+                              size={14}
+                              className="fill-yellow-400 text-yellow-400"
+                            />
+                          ))}
+                          <Star size={14} className="text-gray-200" />
+                          <span className="text-xs text-gray-400 ml-1">
+                            ({book.reviews} Review)
+                          </span>
+                        </div>
+                        <span className="text-xs text-gray-500 font-semibold">
+                          Rate: {book.rating}
+                        </span>
+                      </div>
+
+                      <div className="flex gap-10 mt-4 text-[11px] text-gray-400">
+                        <div>
+                          <p>Author</p>
+                          <p className="font-bold text-gray-800">
+                            {book.author}
+                          </p>
+                        </div>
+                        <div>
+                          <p>Year</p>
+                          <p className="font-bold text-gray-800">{book.year}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between mt-6">
+                      <span className="text-2xl font-bold text-gray-800">
+                        {book.price}
                       </span>
-                    </div>
-
-                    <div className="flex gap-10 mt-4 text-[11px] text-gray-400">
-                      <div>
-                        <p>Author</p>
-                        <p className="font-bold text-gray-800">{book.author}</p>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => {
+                            addToCart(book);
+                            navigate("/cart");
+                          }}
+                          className="bg-[#d81b60] text-white px-6 py-2 rounded-md flex items-center gap-2 text-sm font-semibold hover:bg-[#ad1457] transition-all"
+                        >
+                          Add To Cart <ShoppingCart size={16} />
+                        </button>
+                        <button
+                          onClick={() => toggleWishlist(book)}
+                          className="p-2 border border-gray-200 rounded-md text-[#d81b60] hover:bg-pink-50"
+                        >
+                          <Heart
+                            fill={isInWishlist ? "#E11D74" : "none"}
+                            size={20}
+                          />
+                        </button>
                       </div>
-                      <div>
-                        <p>Year</p>
-                        <p className="font-bold text-gray-800">{book.year}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between mt-6">
-                    <span className="text-2xl font-bold text-gray-800">
-                      {book.price}
-                    </span>
-                    <div className="flex gap-2">
-                      <button className="bg-[#d81b60] text-white px-6 py-2 rounded-md flex items-center gap-2 text-sm font-semibold hover:bg-[#ad1457] transition-all">
-                        Add To Cart <ShoppingCart size={16} />
-                      </button>
-                      <button className="p-2 border border-gray-200 rounded-md text-[#d81b60] hover:bg-pink-50">
-                        <Heart size={20} />
-                      </button>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Pagination */}

@@ -12,9 +12,10 @@ import MainLayout from "../layouts/MainLayout";
 import AboutPage from "../pages/AboutPage";
 import ProfilePage from "../pages/ProfilePage";
 import CartPage from "../pages/CartPage";
-import WhishlistPage from "../pages/WhishlistPage";
 import CheckoutPage from "../pages/CheckoutPage";
 import BookPage from "../pages/BookPage";
+import ProductDetails from "../pages/ProductDetails";
+import WishlistPage from "../pages/WishlistPage";
 
 export default function RouterApp() {
   const ProtectedRoute = () => {
@@ -41,9 +42,10 @@ export default function RouterApp() {
             </Route>
             <Route element={<SecondAuthLayout />}>
               <Route path="/cart" element={<CartPage />} />
-              <Route path="/wishlist" element={<WhishlistPage />} />
+              <Route path="/wishlist" element={<WishlistPage />} />
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/books" element={<BookPage />} />
+              <Route path="/productdetails" element={<ProductDetails />} />
             </Route>
           </Route>
         </Route>

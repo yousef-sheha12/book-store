@@ -13,6 +13,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   const login = useAuthStore((state) => state.login);
+  const updateUser = useAuthStore((state) => state.updateUser);
 
   const handleLogin = async (values) => {
     try {
@@ -20,10 +21,12 @@ export default function LoginPage() {
         identifier: values.email,
         password: values.password,
       });
-
       const token = res.data.jwt;
-
-      login(token);
+      if (token) {
+        login(token);
+        updateUser(res.data.user);
+        navigate("/");
+      }
 
       navigate("/");
     } catch (error) {
