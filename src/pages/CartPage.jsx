@@ -21,7 +21,7 @@ export default function CartPage() {
 
   return (
     <>
-      <div className="space-y-4">
+      <div className="space-y-4 px-15 md:px-20">
         {cart.length === 0 ? (
           <div className="text-center py-10 text-gray-400">
             Your cart is empty
@@ -71,7 +71,7 @@ export default function CartPage() {
                 </button>
               </div>
 
-              <div className="flex-1 text-center font-bold text-gray-700">
+              <div className="flex-1 text-center md:mr-25 font-bold text-gray-700">
                 {book.price}
               </div>
 
