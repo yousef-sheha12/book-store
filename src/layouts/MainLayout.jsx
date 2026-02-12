@@ -17,6 +17,9 @@ export default function MainLayout() {
     if (location.pathname === "/wishlist") return "wishlist";
     if (location.pathname === "/checkout") return "checkout";
     if (location.pathname === "/profile") return "profile";
+    if (location.pathname === "/forget-password") return "forget-password";
+    if (location.pathname === "/reset-password") return "reset-password";
+    if (location.pathname === "/add-code") return "add-code";
     return "home";
   };
   return (

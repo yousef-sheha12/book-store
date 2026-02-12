@@ -10,7 +10,8 @@ import {
 } from "lucide-react";
 import books from "../books.json";
 import { Link, useNavigate } from "react-router-dom";
-import { useShopStore } from "../store";
+import { useSearchStore, useShopStore } from "../store";
+import { Toaster } from "react-hot-toast";
 
 export default function BookPage() {
   useEffect(() => {
@@ -22,11 +23,13 @@ export default function BookPage() {
   const [pageSize] = useState(8);
   const [sort, setSort] = useState("");
 
-  const { toggleWishlist, addToCart, wishlist, searchQuery } = useShopStore();
+  const { toggleWishlist, addToCart, wishlist } = useShopStore();
+  const { searchQuery } = useSearchStore();
   const [search, setSearch] = useState(searchQuery);
   useEffect(() => {
-    setSearch(searchQuery); // ✅ لما السيرش يتغير في الهيدر يتحدث هنا
+    setSearch(searchQuery);
   }, [searchQuery]);
+
   const navigate = useNavigate();
 
   const filteredBooks = books.filter((b) => {
@@ -35,14 +38,14 @@ export default function BookPage() {
       b.author.toLowerCase().includes(search.toLowerCase());
 
     const matchesCategory =
-      activeCategory === "All Categories" || b.category === activeCategory; // تأكد أن ملف JSON يحتوي على حقل category
+      activeCategory === "All Categories" || b.category === activeCategory;
 
     return matchesSearch && matchesCategory;
   });
 
   const sortedBooks = [...filteredBooks].sort((a, b) => {
-    const priceA = parseFloat(a.price.replace("$", ""));
-    const priceB = parseFloat(b.price.replace("$", ""));
+    const priceA = a.price;
+    const priceB = b.price;
     if (sort === "priceLow") return priceA - priceB;
     if (sort === "priceHigh") return priceB - priceA;
     return 0;
@@ -231,7 +234,7 @@ export default function BookPage() {
                       </div>
                       <div className="flex items-center justify-between mt-6">
                         <span className="text-2xl font-bold text-gray-800">
-                          {book.price}
+                          ${book.price}
                         </span>
                         <div className="flex gap-2">
                           <button

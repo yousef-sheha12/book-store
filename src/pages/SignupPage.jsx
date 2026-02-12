@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useState } from "react";
 import { useAuthStore } from "../store";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function SignupPage() {
   const navigate = useNavigate();
@@ -34,12 +35,14 @@ export default function SignupPage() {
           first_name: values.firstName,
           last_name: values.lastName,
         });
-        navigate("/");
-        console.log("Registered Successfully! ✅");
+        toast.success("Registered Successfully! ");
+        setTimeout(() => navigate("/"), 1000);
       }
     } catch (error) {
       console.log("Error Details:", error.response?.data);
-      alert(error.response?.data?.error?.message || "Registration failed ❌");
+      toast.error(
+        error.response?.data?.error?.message || "Registration failed ❌",
+      );
     }
   };
 
@@ -180,6 +183,7 @@ export default function SignupPage() {
           </div>
         </Form>
       </Formik>
+      <Toaster />
     </main>
   );
 }

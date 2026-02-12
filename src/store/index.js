@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import toast from "react-hot-toast";
 
 export const useAuthStore = create(
   persist(
@@ -17,16 +18,17 @@ export const useAuthStore = create(
     }),
     {
       name: "auth-token",
-      storage: createJSONStorage(() => localStorage),
+      storage: createJSONStorage(() => sessionStorage),
     },
   ),
 );
+export const useSearchStore = create((set) => ({
+  searchQuery: "",
+  setSearchQuery: (query) => set({ searchQuery: query }),
+}));
 export const useShopStore = create(
   persist(
     (set, get) => ({
-      searchQuery: "",
-      setSearchQuery: (query) => set({ searchQuery: query }),
-
       cart: [],
       wishlist: [],
 
@@ -42,8 +44,10 @@ export const useShopStore = create(
                 : item,
             ),
           });
+          toast.success("Quantity increased in cart!");
         } else {
           set({ cart: [...cart, { ...product, quantity: 1 }] });
+          toast.success("Book added to cart!");
         }
       },
 
@@ -52,14 +56,16 @@ export const useShopStore = create(
           cart: state.cart.filter((item) => item.id !== productId),
         })),
 
-      increaseQuantity: (productId) =>
+      increaseQuantity: (productId) => {
         set((state) => ({
           cart: state.cart.map((item) =>
             item.id === productId
               ? { ...item, quantity: item.quantity + 1 }
               : item,
           ),
-        })),
+        }));
+        toast.success("Quantity increased!");
+      },
 
       decreaseQuantity: (productId) => {
         const cart = get().cart;
@@ -72,10 +78,12 @@ export const useShopStore = create(
               i.id === productId ? { ...i, quantity: i.quantity - 1 } : i,
             ),
           });
+          toast.error("Quantity decreased!");
         } else {
           set({
             cart: cart.filter((i) => i.id !== productId),
           });
+          toast.success("Book removed from cart!");
         }
       },
 
@@ -89,8 +97,10 @@ export const useShopStore = create(
           set({
             wishlist: wishlist.filter((item) => item.id !== product.id),
           });
+          toast.success("Book removed from wishlist!");
         } else {
           set({ wishlist: [...wishlist, product] });
+          toast.success("Book added to wishlist!");
         }
       },
 

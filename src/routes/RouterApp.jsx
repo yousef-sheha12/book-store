@@ -16,6 +16,7 @@ import CheckoutPage from "../pages/CheckoutPage";
 import BookPage from "../pages/BookPage";
 import ProductDetails from "../pages/ProductDetails";
 import WishlistPage from "../pages/WishlistPage";
+import { Toaster } from "react-hot-toast";
 
 export default function RouterApp() {
   const ProtectedRoute = () => {
@@ -26,6 +27,7 @@ export default function RouterApp() {
   };
   return (
     <>
+      <Toaster />
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="signup" element={<SignupPage />} />

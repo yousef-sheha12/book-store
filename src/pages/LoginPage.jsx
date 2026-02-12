@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useState } from "react";
 import { useAuthStore } from "../store";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -25,13 +26,12 @@ export default function LoginPage() {
       if (token) {
         login(token);
         updateUser(res.data.user);
-        navigate("/");
+        toast.success("Logged in Successfully!");
+        setTimeout(() => navigate("/"), 1000);
       }
-
-      navigate("/");
     } catch (error) {
       console.error("Login Error:", error.response?.data);
-      alert(error.response?.data?.error?.message || "Login failed ❌");
+      toast.error(error.response?.data?.error?.message || "Login failed ❌");
     }
   };
 
@@ -42,6 +42,7 @@ export default function LoginPage() {
 
   return (
     <main className="grow flex justify-center items-center bg-gray-50 py-20 px-4 text-black">
+      <Toaster />
       <Formik
         initialValues={{
           email: "",

@@ -22,6 +22,7 @@ import books from "../books.json";
 import { useShopStore } from "../store";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 
 export default function HomePage() {
   useEffect(() => {
@@ -238,7 +239,7 @@ export default function HomePage() {
 
                       <div className="flex items-center justify-between mt-4">
                         <span className="text-2xl font-bold text-gray-800">
-                          {book.price}
+                          ${book.price}
                         </span>
                         <div className="flex gap-2">
                           <button
@@ -342,7 +343,7 @@ export default function HomePage() {
 
                       <div className="flex items-center justify-between mt-4">
                         <span className="text-2xl font-bold text-gray-800">
-                          {book.price}
+                          ${book.price}
                         </span>
                         <div className="flex gap-2">
                           <button
@@ -373,6 +374,7 @@ export default function HomePage() {
           </div>
         </section>
       </div>
+      <Toaster />
     </>
   );
 }

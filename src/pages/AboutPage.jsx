@@ -158,7 +158,7 @@ export default function AboutPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <input
                   type="text"
-                  name="name" // مهم جداً
+                  name="name"
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Name"
@@ -167,7 +167,7 @@ export default function AboutPage() {
                 />
                 <input
                   type="email"
-                  name="email" // مهم جداً
+                  name="email"
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Email Address"
@@ -176,7 +176,7 @@ export default function AboutPage() {
                 />
               </div>
               <textarea
-                name="message" // مهم جداً
+                name="message"
                 value={formData.message}
                 onChange={handleChange}
                 placeholder="Your Message"

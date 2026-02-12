@@ -1,7 +1,7 @@
 import { Search } from "lucide-react";
 import Navbar from "./Navbar/Navbar";
 import BackgroundImg from "../assets/images/Home.png";
-import { useAuthStore, useShopStore } from "../store";
+import { useAuthStore, useSearchStore } from "../store";
 import NavbarAuth from "./Navbar/NavbarAuth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ export default function Header({ variant }) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   const [inputValue, setInputValue] = useState("");
-  const setSearchQuery = useShopStore((state) => state.setSearchQuery);
+  const { setSearchQuery } = useSearchStore();
   const navigate = useNavigate();
   return (
     <header className="relative w-full overflow-hidden bg-[#1f1d2b]">
@@ -29,7 +29,7 @@ export default function Header({ variant }) {
 
       <div className="relative z-10 w-full">
         {variant === "home" && (
-          <div className="h-screen w-full flex flex-col items-center justify-center pt-20">
+          <div className="h-screen md:h-screen w-full flex flex-col items-center justify-center pt-20">
             <div className="w-full max-w-2xl px-6 relative group">
               <div className="relative flex items-center">
                 <input
@@ -57,7 +57,7 @@ export default function Header({ variant }) {
         )}
 
         {variant === "about" && (
-          <div className="h-screen flex flex-col items-center justify-center text-center px-6">
+          <div className="h-screen md:h-screen flex flex-col items-center justify-center text-center px-6">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">
               About Bookshop
             </h1>
@@ -87,6 +87,15 @@ export default function Header({ variant }) {
         )}
         {variant === "checkout" && (
           <div className="h-40 flex items-center justify-center"></div>
+        )}
+        {variant === "forget-password" && (
+          <div className="h-20 flex items-center justify-center"></div>
+        )}
+        {variant === "reset-password" && (
+          <div className="h-20 flex items-center justify-center"></div>
+        )}
+        {variant === "add-code" && (
+          <div className="h-20 flex items-center justify-center"></div>
         )}
       </div>
     </header>

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useShopStore } from "../store";
 import { Trash2, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 export default function WishlistPage() {
   useEffect(() => {
@@ -13,7 +14,7 @@ export default function WishlistPage() {
   const { wishlist, toggleWishlist, addToCart } = useShopStore();
 
   const totalWishlistPrice = wishlist.reduce((acc, item) => {
-    const price = parseFloat(item.price.replace("$", ""));
+    const price = item.price;
     return acc + price;
   }, 0);
 
@@ -55,7 +56,7 @@ export default function WishlistPage() {
                 </div>
 
                 <div className="flex-1 text-center font-bold text-gray-700">
-                  {book.price}
+                  ${book.price}
                 </div>
 
                 <button
@@ -101,6 +102,7 @@ export default function WishlistPage() {
           </div>
         )}
       </div>
+      <Toaster />
     </div>
   );
 }
