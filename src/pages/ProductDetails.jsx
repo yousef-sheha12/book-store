@@ -29,9 +29,9 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [mainImage, setMainImage] = useState(book?.image);
 
-  useEffect(() => {
-    if (book) setMainImage(book.image);
-  }, [id, book]);
+  // useEffect(() => {
+  //   if (book) setMainImage(book.image);
+  // }, [id, book]);
 
   if (!book) {
     return (
@@ -213,7 +213,7 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-      <Toaster />
+      {/* <Toaster /> */}
     </div>
   );
 };

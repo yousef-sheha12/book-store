@@ -91,7 +91,12 @@ export default function NavbarAuth() {
 
       {isMenuOpen && (
         <div className="md:hidden fixed top-16 left-0 w-full bg-white shadow-lg z-40 border-t border-gray-200">
-          <div className="flex flex-col p-4 space-y-4">
+          <div className="flex flex-col p-4 space-y-4 text-black">
+            {/* <div className="hidden md:flex items-center gap-6 lg:gap-10 mx-auto"> */}
+            <Link to={"/"}>home</Link>
+            <Link to={"/books"}>books</Link>
+            <Link to={"/about"}>about us</Link>
+            {/* </div> */}
             <Link
               to="/profile"
               onClick={() => setIsMenuOpen(false)}

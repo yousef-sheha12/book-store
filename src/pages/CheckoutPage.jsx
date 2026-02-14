@@ -183,7 +183,7 @@ const CheckoutPage = () => {
           </div>
         </form>
 
-        <div className="lg:col-span-5">
+        <div className="lg:col-span-5 ">
           <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 sticky top-8">
             <h2 className="text-xl font-bold mb-6">Order summary</h2>
 
