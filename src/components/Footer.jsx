@@ -57,7 +57,8 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-300">
           <div>
             <span>
-              &lt;Developed By&gt; EraaSoft &lt;All Copy Rights Reserved @2024
+              &lt;Developed By&gt; Yousef Sheha &lt;All Copy Rights Reserved
+              @2024
             </span>
           </div>
 

@@ -16,8 +16,8 @@ export default function NavbarAuth() {
 
   const handleLogout = () => {
     logout();
+    setTimeout(() => navigate("/login"), 1000);
     toast.success("Logged out successfully!");
-    navigate("/login");
   };
 
   return (
@@ -58,6 +58,33 @@ export default function NavbarAuth() {
             className="md:hidden p-2 text-gray-700 hover:text-gray-900"
           >
             <Menu size={24} />
+          </button>
+          <Link
+            to="/profile"
+            onClick={() => setIsMenuOpen(false)}
+            className="hidden md:flex items-center gap-3 p-2  rounded-lg"
+          >
+            <img
+              src={userData?.avatar || "https://via.placeholder.com/40"}
+              alt="User Avatar"
+              className="w-8 h-8 rounded-full border-2 border-gray-300 object-cover"
+            />
+            <div>
+              <p className="font-semibold text-gray-800">
+                {userData?.first_name || "User Name"}
+              </p>
+              <p className="text-gray-500 text-sm">
+                {userData?.email || "user@example.com"}
+              </p>
+            </div>
+          </Link>
+          <button
+            onClick={() => {
+              handleLogout();
+            }}
+            className="btn btn-danger rounded-2xl p-3 text-sm hidden md:flex"
+          >
+            LogOut
           </button>
         </div>
       </nav>

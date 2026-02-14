@@ -102,7 +102,7 @@ export default function WishlistPage() {
           </div>
         )}
       </div>
-      <Toaster />
+      {/* <Toaster /> */}
     </div>
   );
 }

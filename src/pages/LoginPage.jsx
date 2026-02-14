@@ -26,8 +26,8 @@ export default function LoginPage() {
       if (token) {
         login(token);
         updateUser(res.data.user);
-        toast.success("Logged in Successfully!");
         setTimeout(() => navigate("/"), 1000);
+        toast.success("Logged in Successfully!");
       }
     } catch (error) {
       console.error("Login Error:", error.response?.data);
@@ -42,7 +42,7 @@ export default function LoginPage() {
 
   return (
     <main className="grow flex justify-center items-center bg-gray-50 py-20 px-4 text-black">
-      <Toaster />
+      {/* <Toaster /> */}
       <Formik
         initialValues={{
           email: "",
