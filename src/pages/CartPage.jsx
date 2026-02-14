@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useShopStore } from "../store";
 import { Trash2, Plus, Minus } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function CartPage() {
   useEffect(() => {
@@ -39,11 +39,13 @@ export default function CartPage() {
               className="bg-white rounded-2xl p-4 flex flex-col md:flex-row items-center gap-4 shadow-sm border border-gray-50 transition-all hover:shadow-md"
             >
               <div className="flex gap-4 w-full md:flex-2">
-                <img
-                  src={book.image}
-                  className="w-20 h-28 md:w-24 md:h-32 object-cover rounded-xl"
-                  alt={book.title}
-                />
+                <Link to={`/productdetails/${book.id}`}>
+                  <img
+                    src={book.image}
+                    className="w-20 h-28 md:w-24 md:h-32 object-cover rounded-xl"
+                    alt={book.title}
+                  />
+                </Link>
                 <div className="flex flex-col justify-center space-y-1 grow">
                   <h3 className="font-bold text-gray-800 text-sm md:text-base line-clamp-1">
                     {book.title}

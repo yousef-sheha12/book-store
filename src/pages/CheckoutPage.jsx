@@ -11,6 +11,7 @@ import {
   Banknote,
 } from "lucide-react";
 import { useShopStore } from "../store";
+import { Link } from "react-router-dom";
 
 const CheckoutPage = () => {
   const { cart, increaseQuantity, decreaseQuantity, clearCart } =
@@ -191,11 +192,13 @@ const CheckoutPage = () => {
               {cart.map((item) => (
                 <div key={item.id} className="flex gap-4 group">
                   <div className="relative overflow-hidden rounded-lg">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-20 h-24 object-cover transition-transform group-hover:scale-105"
-                    />
+                    <Link to={`/productdetails/${item.id}`}>
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-20 h-24 object-cover transition-transform group-hover:scale-105"
+                      />
+                    </Link>
                   </div>
                   <div className="grow space-y-1">
                     <h4 className="font-bold text-sm leading-tight text-gray-900">

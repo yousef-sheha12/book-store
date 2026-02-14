@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useShopStore } from "../store";
 import { Trash2, ArrowRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 export default function WishlistPage() {
@@ -38,11 +38,13 @@ export default function WishlistPage() {
                 className="bg-white rounded-lg p-4 flex items-center shadow-sm border border-gray-100"
               >
                 <div className="flex col-span-2 gap-4 flex-1">
-                  <img
-                    src={book.image}
-                    className="w-24 rounded-md"
-                    alt={book.title}
-                  />
+                  <Link to={`/productdetails/${book.id}`}>
+                    <img
+                      src={book.image}
+                      className="w-24 rounded-md"
+                      alt={book.title}
+                    />
+                  </Link>
                   <div className="space-y-1">
                     <h3 className="font-bold text-gray-800">{book.title}</h3>
                     <p className="text-xs text-gray-400">{book.author}</p>
