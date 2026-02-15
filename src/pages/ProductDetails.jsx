@@ -29,10 +29,6 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [mainImage, setMainImage] = useState(book?.image);
 
-  // useEffect(() => {
-  //   if (book) setMainImage(book.image);
-  // }, [id, book]);
-
   if (!book) {
     return (
       <div className="h-screen flex items-center justify-center text-2xl font-bold">
@@ -65,7 +61,7 @@ const ProductDetails = () => {
                 />
               </div>
               <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-                {[book.image, book.image1, book.image3].map(
+                {[book.image, book.image1, book.image2].map(
                   (imgSrc, i) =>
                     imgSrc && (
                       <div
